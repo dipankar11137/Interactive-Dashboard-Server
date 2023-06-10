@@ -105,13 +105,13 @@ async function run() {
       res.send(result);
     });
 
-    // // Get all Notice
-    // app.get('/notices', async (req, res) => {
-    //   const query = {};
-    //   const cursor = noticeCollection.find(query);
-    //   const result = await cursor.toArray();
-    //   res.send(result);
-    // });
+    // Get all Book
+    app.get('/buyBlood', async (req, res) => {
+      const query = {};
+      const cursor = buyBloodsCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
     // // Notices Filter by email
     // app.get('/notice/:email', async (req, res) => {
     //   const email = req.params.email;
