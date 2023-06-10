@@ -112,6 +112,25 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+
+    // restock buy blood item and update
+    app.put('/buyBloodId/:id', async (req, res) => {
+      const id = req.params.id;
+      const updateQuantity = req.body;
+      const query = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          quantity: updateQuantity.quantity,
+        },
+      };
+      const result = await buyBloodsCollection.updateOne(
+        query,
+        updateDoc,
+        options
+      );
+      res.send(result);
+    });
     // // Notices Filter by email
     // app.get('/notice/:email', async (req, res) => {
     //   const email = req.params.email;
