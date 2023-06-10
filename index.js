@@ -131,6 +131,13 @@ async function run() {
       );
       res.send(result);
     });
+    // // Delete one buy blood
+    app.delete('/buyBlood/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await buyBloodsCollection.deleteOne(query);
+      res.send(result);
+    });
     // // Notices Filter by email
     // app.get('/notice/:email', async (req, res) => {
     //   const email = req.params.email;
