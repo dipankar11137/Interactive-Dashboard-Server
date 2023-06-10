@@ -116,12 +116,12 @@ async function run() {
     // restock buy blood item and update
     app.put('/buyBloodId/:id', async (req, res) => {
       const id = req.params.id;
-      const updateQuantity = req.body;
+      const updateDelivered = req.body;
       const query = { _id: ObjectId(id) };
       const options = { upsert: true };
       const updateDoc = {
         $set: {
-          quantity: updateQuantity.quantity,
+          delivered: updateDelivered.delivered,
         },
       };
       const result = await buyBloodsCollection.updateOne(
