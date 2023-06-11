@@ -106,11 +106,18 @@ async function run() {
       res.send(result);
     });
 
-    // Get all Book
+    // Get all Buy
     app.get('/buyBlood', async (req, res) => {
       const query = {};
       const cursor = buyBloodsCollection.find(query);
       const result = await cursor.toArray();
+      res.send(result);
+    });
+    // get buy blood by id
+    app.get('/buyBlood/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await buyBloodsCollection.findOne(query);
       res.send(result);
     });
     // get buy filter by email
