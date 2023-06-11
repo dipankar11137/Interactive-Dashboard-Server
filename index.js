@@ -114,7 +114,7 @@ async function run() {
       res.send(result);
     });
     // get buy blood by id
-    app.get('/buyBlood/:id', async (req, res) => {
+    app.get('/buyBloodBuyId/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       const result = await buyBloodsCollection.findOne(query);
@@ -138,6 +138,24 @@ async function run() {
       const updateDoc = {
         $set: {
           delivered: updateDelivered.delivered,
+        },
+      };
+      const result = await buyBloodsCollection.updateOne(
+        query,
+        updateDoc,
+        options
+      );
+      res.send(result);
+    });
+    // restock buy blood item and update payment
+    app.put('/buyBloodPayment/:id', async (req, res) => {
+      const id = req.params.id;
+      const updatePayment = req.body;
+      const query = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          payment: updatePayment.payment,
         },
       };
       const result = await buyBloodsCollection.updateOne(
