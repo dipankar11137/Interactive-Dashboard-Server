@@ -216,7 +216,7 @@ async function run() {
       res.send(result);
     });
     // restock donate blood and update accept
-    app.put('/buyBloodId/:id', async (req, res) => {
+    app.put('/donateBloodId/:id', async (req, res) => {
       const id = req.params.id;
       const updateAccept = req.body;
       const query = { _id: ObjectId(id) };
