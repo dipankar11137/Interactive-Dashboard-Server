@@ -215,6 +215,24 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+    // restock donate blood and update accept
+    app.put('/buyBloodId/:id', async (req, res) => {
+      const id = req.params.id;
+      const updateAccept = req.body;
+      const query = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          accept: updateAccept.accept,
+        },
+      };
+      const result = await donateBloodCollection.updateOne(
+        query,
+        updateDoc,
+        options
+      );
+      res.send(result);
+    });
     // // Delete one donate blood
     app.delete('/donateBlood/:id', async (req, res) => {
       const id = req.params.id;
