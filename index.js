@@ -27,6 +27,9 @@ async function run() {
     const userCollection = client.db('blood-bank').collection('user');
     const bloodsCollection = client.db('blood-bank').collection('bloods');
     const buyBloodsCollection = client.db('blood-bank').collection('buyBloods');
+    const donateBloodCollection = client
+      .db('blood-bank')
+      .collection('donateBlood');
     //   // // // // // // // // // // // //
 
     // create and update User
@@ -63,6 +66,20 @@ async function run() {
       const cursor = userCollection.find(query);
       const user = await cursor.toArray();
       res.send(user);
+    });
+    // restock blood item and update
+    app.put('/userId/:id', async (req, res) => {
+      const id = req.params.id;
+      const updateFreeBlood = req.body;
+      const query = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          freeBlood: updateFreeBlood.freeBlood,
+        },
+      };
+      const result = await userCollection.updateOne(query, updateDoc, options);
+      res.send(result);
     });
     // get blood
     app.get('/bloods', async (req, res) => {
@@ -170,6 +187,25 @@ async function run() {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       const result = await buyBloodsCollection.deleteOne(query);
+      res.send(result);
+    });
+    //donate blood update and put data
+    app.put('/donateBlood/:email', async (req, res) => {
+      const email = req.params.email;
+      const user = req.body;
+
+      const filter = { email: email };
+      const options = { upsert: true };
+
+      const updatedDoc = {
+        $set: user,
+      };
+
+      const result = await donateBloodCollection.updateOne(
+        filter,
+        updatedDoc,
+        options
+      );
       res.send(result);
     });
   } finally {
