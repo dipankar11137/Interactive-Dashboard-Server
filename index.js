@@ -208,6 +208,13 @@ async function run() {
       );
       res.send(result);
     });
+    // Get all donate blood
+    app.get('/donateBlood', async (req, res) => {
+      const query = {};
+      const cursor = donateBloodCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
   } finally {
   }
 }
