@@ -79,6 +79,13 @@ async function run() {
       const result = await productCollection.insertOne(postResult);
       res.send(result);
     });
+    // // get products
+    app.get('/allProduct', async (req, res) => {
+      const query = {};
+      const cursor = productCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
     // // restock blood item and update
     // app.put('/userId/:id', async (req, res) => {
     //   const id = req.params.id;
