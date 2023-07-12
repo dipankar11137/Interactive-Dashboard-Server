@@ -61,14 +61,14 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
-    // // // all User filter by email category
-    // app.get('/user/:email', async (req, res) => {
-    //   const email = req.params.email;
-    //   const query = { email };
-    //   const cursor = userCollection.find(query);
-    //   const user = await cursor.toArray();
-    //   res.send(user);
-    // });
+    // // all User filter by email category
+    app.get('/user/:email', async (req, res) => {
+      const email = req.params.email;
+      const query = { email };
+      const cursor = userCollection.find(query);
+      const user = await cursor.toArray();
+      res.send(user);
+    });
     // // restock blood item and update
     // app.put('/userId/:id', async (req, res) => {
     //   const id = req.params.id;
