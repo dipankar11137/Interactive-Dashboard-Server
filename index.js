@@ -106,9 +106,16 @@ async function run() {
 
     //                     Buy    //
     // post buy
-    app.post('/buyProduct', async (req, res) => {
+    app.post('/buyProducts', async (req, res) => {
       const postResult = req.body;
-      const result = await buyBloodsCollection.insertOne(postResult);
+      const result = await buyProductCollection.insertOne(postResult);
+      res.send(result);
+    });
+    // // get buy products
+    app.get('/buyProducts', async (req, res) => {
+      const query = {};
+      const cursor = buyProductCollection.find(query);
+      const result = await cursor.toArray();
       res.send(result);
     });
     // // restock blood item and update
