@@ -27,7 +27,9 @@ async function run() {
     const userCollection = client
       .db('interactive_dashboard')
       .collection('user');
-    const bloodsCollection = client.db('blood-bank').collection('bloods');
+    const productCollection = client
+      .db('interactive_dashboard')
+      .collection('products');
     const buyBloodsCollection = client.db('blood-bank').collection('buyBloods');
     const donateBloodCollection = client
       .db('blood-bank')
@@ -68,6 +70,14 @@ async function run() {
       const cursor = userCollection.find(query);
       const user = await cursor.toArray();
       res.send(user);
+    });
+
+    // //                     product   //
+    // // post product
+    app.post('/allProduct', async (req, res) => {
+      const postResult = req.body;
+      const result = await productCollection.insertOne(postResult);
+      res.send(result);
     });
     // // restock blood item and update
     // app.put('/userId/:id', async (req, res) => {
