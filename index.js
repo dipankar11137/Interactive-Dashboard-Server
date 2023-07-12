@@ -11,8 +11,8 @@ app.use(cors());
 app.use(express.json());
 
 
-const uri = `mongodb+srv://blood_bank:ydQqlxj3DGqlPHYk@cluster0.gxqkllr.mongodb.net/?retryWrites=true&w=majority`;
-
+const uri =
+  'mongodb+srv://interactive_dashboard:Xd7sDKG6GUBJPoqK@cluster0.zx6xlql.mongodb.net/?retryWrites=true&w=majority';
 
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
@@ -24,7 +24,9 @@ async function run() {
   try {
     await client.connect();
     // console.log("database connect");
-    const userCollection = client.db('blood-bank').collection('user');
+    const userCollection = client
+      .db('interactive_dashboard')
+      .collection('user');
     const bloodsCollection = client.db('blood-bank').collection('bloods');
     const buyBloodsCollection = client.db('blood-bank').collection('buyBloods');
     const donateBloodCollection = client
@@ -34,31 +36,31 @@ async function run() {
 
     // create and update User
     //create and update a user
-    // app.put('/create-user/:email', async (req, res) => {
-    //   const email = req.params.email;
-    //   const user = req.body;
+    app.put('/create-user/:email', async (req, res) => {
+      const email = req.params.email;
+      const user = req.body;
 
-    //   const filter = { email: email };
-    //   const options = { upsert: true };
+      const filter = { email: email };
+      const options = { upsert: true };
 
-    //   const updatedDoc = {
-    //     $set: user,
-    //   };
+      const updatedDoc = {
+        $set: user,
+      };
 
-    //   const result = await userCollection.updateOne(
-    //     filter,
-    //     updatedDoc,
-    //     options
-    //   );
-    //   res.send(result);
-    // });
+      const result = await userCollection.updateOne(
+        filter,
+        updatedDoc,
+        options
+      );
+      res.send(result);
+    });
     // // get user
-    // app.get('/user', async (req, res) => {
-    //   const query = {};
-    //   const cursor = userCollection.find(query);
-    //   const result = await cursor.toArray();
-    //   res.send(result);
-    // });
+    app.get('/user', async (req, res) => {
+      const query = {};
+      const cursor = userCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
     // // // all User filter by email category
     // app.get('/user/:email', async (req, res) => {
     //   const email = req.params.email;
