@@ -158,6 +158,24 @@ async function run() {
       const user = await cursor.toArray();
       res.send(user);
     });
+    // //  buy product update payment
+    app.put('/buyProductPayment/:id', async (req, res) => {
+      const id = req.params.id;
+      const updatePayment = req.body;
+      const query = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          payment: updatePayment.payment,
+        },
+      };
+      const result = await buyProductCollection.updateOne(
+        query,
+        updateDoc,
+        options
+      );
+      res.send(result);
+    });
     app.delete('/buyProduct/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
