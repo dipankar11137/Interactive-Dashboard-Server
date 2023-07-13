@@ -103,6 +103,24 @@ async function run() {
       const result = await productCollection.findOne(query);
       res.send(result);
     });
+    // // restock Product item and update
+    app.put('/productId/:id', async (req, res) => {
+      const id = req.params.id;
+      const updateQuantity = req.body;
+      const query = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          quantity: updateQuantity.quantity,
+        },
+      };
+      const result = await productCollection.updateOne(
+        query,
+        updateDoc,
+        options
+      );
+      res.send(result);
+    });
 
     //                     Buy    //
     // post buy
