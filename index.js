@@ -128,6 +128,7 @@ async function run() {
       const result = await productCollection.deleteOne(query);
       res.send(result);
     });
+
     //                     Buy    //
     // post buy
     app.post('/buyProducts', async (req, res) => {
@@ -142,6 +143,13 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+    // get by product by id
+    app.get('/buyProductId/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await buyProductCollection.findOne(query);
+      res.send(result);
+    });
     // // get buy filter by email
     app.get('/buyProduct/:email', async (req, res) => {
       const email = req.params.email;
@@ -149,6 +157,12 @@ async function run() {
       const cursor = buyProductCollection.find(query);
       const user = await cursor.toArray();
       res.send(user);
+    });
+    app.delete('/buyProduct/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await buyProductCollection.deleteOne(query);
+      res.send(result);
     });
     // // restock blood item and update
     // app.put('/userId/:id', async (req, res) => {
