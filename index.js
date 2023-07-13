@@ -176,6 +176,26 @@ async function run() {
       );
       res.send(result);
     });
+    // product buy update delivered
+    app.put('/buyDelivered/:id', async (req, res) => {
+      const id = req.params.id;
+      const updateDelivered = req.body;
+      const query = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          delivered: updateDelivered.delivered,
+        },
+      };
+      const result = await buyProductCollection.updateOne(
+        query,
+        updateDoc,
+        options
+      );
+      res.send(result);
+    });
+
+    // Delete Buy Product
     app.delete('/buyProduct/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
