@@ -142,6 +142,14 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+    // // get buy filter by email
+    app.get('/buyProduct/:email', async (req, res) => {
+      const email = req.params.email;
+      const query = { email };
+      const cursor = buyProductCollection.find(query);
+      const user = await cursor.toArray();
+      res.send(user);
+    });
     // // restock blood item and update
     // app.put('/userId/:id', async (req, res) => {
     //   const id = req.params.id;
