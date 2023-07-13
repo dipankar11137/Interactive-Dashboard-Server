@@ -33,9 +33,9 @@ async function run() {
     const buyProductCollection = client
       .db('interactive_dashboard')
       .collection('buyProducts');
-    const donateBloodCollection = client
-      .db('blood-bank')
-      .collection('donateBlood');
+    const contactCollection = client
+      .db('interactive_dashboard')
+      .collection('contacts');
     //   // // // // // // // // // // // //
 
     // create and update User
@@ -202,6 +202,23 @@ async function run() {
       const result = await buyProductCollection.deleteOne(query);
       res.send(result);
     });
+
+    //                       contact     //
+    // post contact
+    app.post('/contact', async (req, res) => {
+      const postResult = req.body;
+      const result = await contactCollection.insertOne(postResult);
+      res.send(result);
+    });
+
+    // // Get all Buy
+    // app.get('/buyBlood', async (req, res) => {
+    //   const query = {};
+    //   const cursor = buyBloodsCollection.find(query);
+    //   const result = await cursor.toArray();
+    //   res.send(result);
+    // });
+
     // // restock blood item and update
     // app.put('/userId/:id', async (req, res) => {
     //   const id = req.params.id;
