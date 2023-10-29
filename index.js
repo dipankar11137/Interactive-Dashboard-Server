@@ -36,6 +36,9 @@ async function run() {
     const contactCollection = client
       .db('interactive_dashboard')
       .collection('contacts');
+    const cartCollection = client
+      .db('interactive_dashboard')
+      .collection('carts');
     //   // // // // // // // // // // // //
 
     // create and update User
@@ -140,6 +143,27 @@ async function run() {
     app.get('/buyProducts', async (req, res) => {
       const query = {};
       const cursor = buyProductCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+    // post cart
+    app.post('/cartProducts', async (req, res) => {
+      const postResult = req.body;
+      const result = await cartCollection.insertOne(postResult);
+      res.send(result);
+    });
+    // // get buy filter by email
+    app.get('/cartProducts/:email', async (req, res) => {
+      const email = req.params.email;
+      const query = { email };
+      const cursor = cartCollection.find(query);
+      const user = await cursor.toArray();
+      res.send(user);
+    });
+    // // get carts products
+    app.get('/cartProducts', async (req, res) => {
+      const query = {};
+      const cursor = cartCollection.find(query);
       const result = await cursor.toArray();
       res.send(result);
     });
