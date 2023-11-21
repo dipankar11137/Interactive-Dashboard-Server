@@ -146,6 +146,7 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+    //      cart
     // post cart
     app.post('/cartProducts', async (req, res) => {
       const postResult = req.body;
@@ -167,7 +168,16 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
-    // get by product by id
+    // Delete cart Product
+    app.delete('/cartProduct/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await cartCollection.deleteOne(query);
+      res.send(result);
+    });
+
+    //        buy
+    // get buy product by id
     app.get('/buyProductId/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
